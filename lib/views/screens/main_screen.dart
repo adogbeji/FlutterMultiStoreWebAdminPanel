@@ -8,10 +8,36 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AdminScaffold(
-      backgroundColor: Colors.yellow.shade900,
       appBar: AppBar(
+        backgroundColor: Colors.yellow.shade900,
         title: const Text('Management'),
       ),
-      body: const Text('Dashboard'),);
+      sideBar: const SideBar(
+        items: [
+          AdminMenuItem(
+            title: 'Categories',
+            icon: Icons.category,
+            route: '/',
+          ),
+          AdminMenuItem(
+            title: 'Categories',
+            icon: Icons.category,
+            route: '/',
+          ),
+          AdminMenuItem(
+            title: 'Categories',
+            icon: Icons.category,
+            route: '/',
+          ),
+          AdminMenuItem(
+            title: 'Categories',
+            icon: Icons.category,
+            route: '/',
+          ),
+        ],
+        selectedRoute: '',
+      ),
+      body: const Text('Dashboard'),
+    );
   }
 }
