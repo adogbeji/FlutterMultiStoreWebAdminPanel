@@ -28,49 +28,49 @@ class _MainScreenState extends State<MainScreen> {
           _selectedItem = DashboardScreen();
         });
 
-      break;
+        break;
 
       case VendorScreen.routeName:
         setState(() {
           _selectedItem = VendorScreen();
         });
 
-      break;
+        break;
 
       case WithdrawalScreen.routeName:
         setState(() {
           _selectedItem = WithdrawalScreen();
         });
 
-      break;
+        break;
 
       case OrderScreen.routeName:
         setState(() {
           _selectedItem = OrderScreen();
         });
 
-      break;
+        break;
 
       case CategoriesScreen.routeName:
         setState(() {
           _selectedItem = CategoriesScreen();
         });
 
-      break;
+        break;
 
       case ProductScreen.routeName:
         setState(() {
           _selectedItem = ProductScreen();
         });
 
-      break;
+        break;
 
       case UploadBannerScreen.routeName:
         setState(() {
           _selectedItem = UploadBannerScreen();
         });
 
-      break;
+        break;
     }
   }
 
@@ -123,6 +123,32 @@ class _MainScreenState extends State<MainScreen> {
         onSelected: (item) {
           screenSelector(item);
         },
+        header: Container(
+          height: 50,
+          width: double.infinity,
+          color: Colors.grey.shade800,
+          child: const Center(
+            child: Text(
+              'Multi Store',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+        footer: Container(
+          height: 50,
+          width: double.infinity,
+          color: Colors.grey.shade800,
+          child: const Center(
+            child: Text(
+              'Copyright 2024',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
       ),
       body: _selectedItem,
     );
