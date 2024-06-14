@@ -3,8 +3,76 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 
-class MainScreen extends StatelessWidget {
+import 'package:multi_store_web_admin/views/screens/side_bar_screens/dashboard_screen.dart';
+import 'package:multi_store_web_admin/views/screens/side_bar_screens/vendors_screen.dart';
+import 'package:multi_store_web_admin/views/screens/side_bar_screens/withdrawal_screen.dart';
+import 'package:multi_store_web_admin/views/screens/side_bar_screens/orders_screen.dart';
+import 'package:multi_store_web_admin/views/screens/side_bar_screens/categories_screen.dart';
+import 'package:multi_store_web_admin/views/screens/side_bar_screens/products_screen.dart';
+import 'package:multi_store_web_admin/views/screens/side_bar_screens/upload_banner_screen.dart';
+
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  Widget _selectedItem = DashboardScreen();
+
+  screenSelector(item) {
+    switch (item.route) {
+      case DashboardScreen.routeName:
+        setState(() {
+          _selectedItem = DashboardScreen();
+        });
+
+      break;
+
+      case VendorScreen.routeName:
+        setState(() {
+          _selectedItem = VendorScreen();
+        });
+
+      break;
+
+      case WithdrawalScreen.routeName:
+        setState(() {
+          _selectedItem = WithdrawalScreen();
+        });
+
+      break;
+
+      case OrderScreen.routeName:
+        setState(() {
+          _selectedItem = OrderScreen();
+        });
+
+      break;
+
+      case CategoriesScreen.routeName:
+        setState(() {
+          _selectedItem = CategoriesScreen();
+        });
+
+      break;
+
+      case ProductScreen.routeName:
+        setState(() {
+          _selectedItem = ProductScreen();
+        });
+
+      break;
+
+      case UploadBannerScreen.routeName:
+        setState(() {
+          _selectedItem = UploadBannerScreen();
+        });
+
+      break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,47 +81,50 @@ class MainScreen extends StatelessWidget {
         backgroundColor: Colors.yellow.shade900,
         title: const Text('Management'),
       ),
-      sideBar: const SideBar(
-        items: [
+      sideBar: SideBar(
+        items: const [
           AdminMenuItem(
             title: 'Dashboard',
             icon: Icons.dashboard,
-            route: '/',
+            route: DashboardScreen.routeName,
           ),
           AdminMenuItem(
             title: 'Vendors',
             icon: CupertinoIcons.person_3,
-            route: '/',
+            route: VendorScreen.routeName,
           ),
           AdminMenuItem(
             title: 'Withdrawal',
             icon: CupertinoIcons.money_dollar,
-            route: '/',
+            route: WithdrawalScreen.routeName,
           ),
           AdminMenuItem(
             title: 'Orders',
             icon: CupertinoIcons.shopping_cart,
-            route: '/',
+            route: OrderScreen.routeName,
           ),
           AdminMenuItem(
             title: 'Categories',
             icon: Icons.category,
-            route: '/',
+            route: CategoriesScreen.routeName,
           ),
           AdminMenuItem(
             title: 'Products',
             icon: Icons.shop,
-            route: '/',
+            route: ProductScreen.routeName,
           ),
           AdminMenuItem(
             title: 'Upload Banners',
             icon: CupertinoIcons.add,
-            route: '/',
+            route: UploadBannerScreen.routeName,
           ),
         ],
         selectedRoute: '',
+        onSelected: (item) {
+          screenSelector(item);
+        },
       ),
-      body: const Text('Dashboard'),
+      body: _selectedItem,
     );
   }
 }

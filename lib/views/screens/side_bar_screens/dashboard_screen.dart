@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+  // const DashboardScreen({super.key});
+  static const String routeName = '\DashboardScreen';
 
   @override
   Widget build(BuildContext context) {
