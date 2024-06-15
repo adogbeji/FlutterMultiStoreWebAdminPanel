@@ -20,25 +20,53 @@ class UploadBannerScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          const Divider(color: Colors.grey,),
-
+          const Divider(
+            color: Colors.grey,
+          ),
           Row(
             children: [
               Padding(
                 padding: const EdgeInsets.all(14.0),
-                child: Container(
-                  height: 140,
-                  width: 140,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade500,
-                    border: Border.all(color: Colors.grey.shade800,),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Center(
-                    child: Text('Banners'),
-                  ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 140,
+                      width: 140,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade500,
+                        border: Border.all(
+                          color: Colors.grey.shade800,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Text('Banners'),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.yellow.shade900,
+                      ),
+                      child: const Text('Upload Image'),
+                    ),
+                  ],
                 ),
+              ),
+              const SizedBox(
+                width: 30,
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.yellow.shade900,
+                ),
+                child: const Text('Save'),
               ),
             ],
           ),
