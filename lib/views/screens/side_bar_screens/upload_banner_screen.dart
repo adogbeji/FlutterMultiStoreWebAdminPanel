@@ -11,7 +11,9 @@ class UploadBannerScreen extends StatefulWidget {
 }
 
 class _UploadBannerScreenState extends State<UploadBannerScreen> {
-  dynamic _image; // Global variable to store picked image
+  dynamic _image;  // Global variable to store picked image
+
+  String? fileName;  // Stores name of picked file
 
   pickImage() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -19,7 +21,9 @@ class _UploadBannerScreenState extends State<UploadBannerScreen> {
 
     if (result != null) {
       setState(() {
-        _image = result.files.first.bytes; // Assigns picked image to _image (above)
+        _image = result.files.first.bytes;  // Assigns picked image to _image (above)
+
+        fileName = result.files.first.name;  // Assigns name of pickde image to fileName (above)
       });
     }
   }
