@@ -2,18 +2,26 @@ import 'package:flutter/material.dart';
 
 import 'package:file_picker/file_picker.dart';
 
-class UploadBannerScreen extends StatelessWidget {
+class UploadBannerScreen extends StatefulWidget {
   // const UploadBannerScreen({super.key});
   static const String routeName = '\UploadBannerScreen';
 
-  dynamic _image;  // Global variable to store picked image
+  @override
+  State<UploadBannerScreen> createState() => _UploadBannerScreenState();
+}
 
-  // FUNCTION FOR PICKING IMAGES
+class _UploadBannerScreenState extends State<UploadBannerScreen> {
+  dynamic _image; // Global variable to store picked image
+
   pickImage() async {
-    FilePickerResult? result = await FilePicker.platform
-    .pickFiles(allowMultiple: false, type: FileType.image);
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: false, type: FileType.image); // Stores picked image
 
-    if (result != null) {}
+    if (result != null) {
+      setState(() {
+        _image = result.files.first.bytes; // Assigns picked image to _image (above)
+      });
+    }
   }
 
   @override
@@ -51,15 +59,22 @@ class UploadBannerScreen extends StatelessWidget {
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Center(
-                        child: Text('Banners'),
-                      ),
+                      child: _image != null
+                          ? Image.memory(
+                            _image,
+                              fit: BoxFit.cover,
+                            )
+                          : const Center(
+                              child: Text('Banner'),
+                            ),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        pickImage();
+                      },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.yellow.shade900,
