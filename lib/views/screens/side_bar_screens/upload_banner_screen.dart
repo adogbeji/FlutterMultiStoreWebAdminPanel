@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 
+import 'package:file_picker/file_picker.dart';
+
 class UploadBannerScreen extends StatelessWidget {
   // const UploadBannerScreen({super.key});
   static const String routeName = '\UploadBannerScreen';
+
+  dynamic _image;  // Global variable to store picked image
+
+  // FUNCTION FOR PICKING IMAGES
+  pickImage() async {
+    FilePickerResult? result = await FilePicker.platform
+    .pickFiles(allowMultiple: false, type: FileType.image);
+
+    if (result != null) {}
+  }
 
   @override
   Widget build(BuildContext context) {
