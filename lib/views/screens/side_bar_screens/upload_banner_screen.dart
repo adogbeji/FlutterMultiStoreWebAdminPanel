@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:file_picker/file_picker.dart';
@@ -11,10 +12,13 @@ class UploadBannerScreen extends StatefulWidget {
 }
 
 class _UploadBannerScreenState extends State<UploadBannerScreen> {
+  final FirebaseStorage _storage = FirebaseStorage.instance;  // Stores firebase_storage package
+
   dynamic _image;  // Global variable to store picked image
 
   String? fileName;  // Stores name of picked file
-
+  
+  // FUNCTION TO PICK IMAGES
   pickImage() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: false, type: FileType.image); // Stores picked image
@@ -27,6 +31,9 @@ class _UploadBannerScreenState extends State<UploadBannerScreen> {
       });
     }
   }
+
+  // FUNCTION TO UPLOAD IMAGE TO FIREBASE STORAGE
+  _uploadBannersToStorage(dynamic image) {}
 
   @override
   Widget build(BuildContext context) {
