@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class UploadBannerScreen extends StatefulWidget {
 
 class _UploadBannerScreenState extends State<UploadBannerScreen> {
   final FirebaseStorage _storage = FirebaseStorage.instance;  // Stores firebase_storage package
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;  // Stores cloud_firestore package
 
   dynamic _image;  // Global variable to store picked image
 
@@ -41,6 +43,17 @@ class _UploadBannerScreenState extends State<UploadBannerScreen> {
     TaskSnapshot snapshot = await uploadTask;  // Stores result of uploaded image
     String downloadURL = await snapshot.ref.getDownloadURL();  // Stores image download URL
     return downloadURL;
+  }
+  
+  // FUNCTION TO STORE BANNER IMAGES IN FIRESTORE DATABASE
+  uploadToFireStore() async {
+    if (_image != null) {  // Function called if user has picked an image
+      String imageURL = await _uploadBannersToStorage(_image); // Stores image URL
+    
+      await _firestore.collection('banners').doc(fileName).set({
+        'image': imageURL,
+      });  // Stores images in 'banners' collection
+    }
   }
 
   @override
@@ -107,7 +120,9 @@ class _UploadBannerScreenState extends State<UploadBannerScreen> {
                 width: 30,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  uploadToFireStore();
+                },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.yellow.shade900,
