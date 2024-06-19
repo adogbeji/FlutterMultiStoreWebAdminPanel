@@ -27,13 +27,21 @@ class _UploadBannerScreenState extends State<UploadBannerScreen> {
       setState(() {
         _image = result.files.first.bytes;  // Assigns picked image to _image (above)
 
-        fileName = result.files.first.name;  // Assigns name of pickde image to fileName (above)
+        fileName = result.files.first.name;  // Assigns name of picked image to fileName (above)
       });
     }
   }
 
   // FUNCTION TO UPLOAD IMAGE TO FIREBASE STORAGE
-  _uploadBannersToStorage(dynamic image) {}
+  _uploadBannersToStorage(dynamic image) async {
+    Reference ref = _storage.ref().child('Banners').child(fileName!);  // Stores result of creating folder to store banner images 
+    
+    UploadTask uploadTask = ref.putData(image);  // Stores result of uploading image to Firebase Storage
+  
+    TaskSnapshot snapshot = await uploadTask;  // Stores result of uploaded image
+    String downloadURL = await snapshot.ref.getDownloadURL();  // Stores image download URL
+    return downloadURL;
+  }
 
   @override
   Widget build(BuildContext context) {
