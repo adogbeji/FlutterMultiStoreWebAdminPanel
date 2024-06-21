@@ -1,8 +1,26 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:multi_store_web_admin/views/screens/main_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding
+      .ensureInitialized(); // Ensures all Flutter widgets have been successfully initialised
+
+  await Firebase.initializeApp(
+      options: kIsWeb || Platform.isAndroid
+          ? const FirebaseOptions(
+              apiKey: 'AIzaSyCV9oi762PMxndTngg5ge3jRG4pIVg43-g',
+              appId: '1:647264549373:web:d03874ff40ecc9f72c8194',
+              messagingSenderId: '647264549373',
+              projectId: 'multi-store-a9a8b',
+              storageBucket: 'multi-store-a9a8b.appspot.com',
+            )
+          : null);
   runApp(const MyApp());
 }
 
