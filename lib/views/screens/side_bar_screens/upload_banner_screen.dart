@@ -57,6 +57,10 @@ class _UploadBannerScreenState extends State<UploadBannerScreen> {
         'image': imageURL,
       }).whenComplete(() {
         EasyLoading.dismiss();  // Stops loading spinner after image has been uploaded
+        
+        setState(() {
+          _image = null;  // Removes image from screen after it has been uploaded
+        });
       }); 
     }
   }
