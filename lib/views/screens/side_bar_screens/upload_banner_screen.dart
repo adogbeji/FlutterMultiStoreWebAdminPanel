@@ -1,8 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class UploadBannerScreen extends StatefulWidget {
   // const UploadBannerScreen({super.key});
@@ -47,12 +48,16 @@ class _UploadBannerScreenState extends State<UploadBannerScreen> {
   
   // FUNCTION TO STORE BANNER IMAGES IN FIRESTORE DATABASE
   uploadToFireStore() async {
+    EasyLoading.show();  // Shows loading spinner
     if (_image != null) {  // Function called if user has picked an image
       String imageURL = await _uploadBannersToStorage(_image); // Stores image URL
-    
-      await _firestore.collection('banners').doc(fileName).set({
+      
+      // Stores images in 'banners' collection
+      await _firestore.collection('banners').doc(fileName).set({ 
         'image': imageURL,
-      });  // Stores images in 'banners' collection
+      }).whenComplete(() {
+        EasyLoading.dismiss();  // Stops loading spinner after image has been uploaded
+      }); 
     }
   }
 
