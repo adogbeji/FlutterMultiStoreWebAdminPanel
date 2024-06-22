@@ -7,10 +7,20 @@ class CategoriesScreen extends StatelessWidget {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Form Key
 
+
+  uploadCategory() {
+    if (_formKey.currentState!.validate()) {
+      print('Valid!');
+    } else {
+      print('Not Valid!');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
+        key: _formKey,
         child: Column(
           children: [
             Container(
@@ -87,7 +97,9 @@ class CategoriesScreen extends StatelessWidget {
                 ),
         
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    uploadCategory();
+                  },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.yellow.shade900,
