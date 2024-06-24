@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class CategoriesScreen extends StatefulWidget {
   // const CategoriesScreen({super.key});
@@ -12,6 +15,7 @@ class CategoriesScreen extends StatefulWidget {
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
   final FirebaseStorage _storage = FirebaseStorage.instance;  // Stores firebase_storage package
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;  // Stores cloud_firestore package
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Form Key
 
   dynamic _image;  // Global variable to store picked image
@@ -19,6 +23,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   String? fileName;  // Stores name of picked file
 
   late String categoryName;  // Stores entered catgeory name
+
 
   // FUNCTION TO PICK IMAGES
   _pickImage() async {
@@ -46,11 +51,23 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     String downloadURL = await snapshot.ref.getDownloadURL();  // Stores image download URL
     return downloadURL;
   }
-
+  
+  // FUNCTION TO STORE CATEGORY IMAGES IN FIRESTORE DATABASE
   uploadCategory() async {
+    EasyLoading.show();  // Shows loading spinner
     if (_formKey.currentState!.validate()) {
-      // print('Valid!');
       String imageURL = await _uploadCategoryBannerToStorage(_image);  // Function called if form is valid
+
+      await _firestore.collection('categories').doc(fileName).set({
+        'image': imageURL,
+        'categoryName': categoryName,
+      }).whenComplete(() {
+        EasyLoading.dismiss();  // Stops loading spinner after image has been uploaded
+        
+        setState(() {
+          _image = null;  // Removes image from screen after it has been uploaded
+        });
+      }); 
     } else {
       print('Not Valid!');
     }
