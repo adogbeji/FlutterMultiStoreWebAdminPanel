@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
-
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class CategoriesScreen extends StatefulWidget {
   // const CategoriesScreen({super.key});
@@ -12,11 +11,14 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
+  final FirebaseStorage _storage = FirebaseStorage.instance;  // Stores firebase_storage package
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Form Key
 
-  dynamic _image; // Global variable to store picked image
+  dynamic _image;  // Global variable to store picked image
 
-  String? fileName; // Stores name of picked file
+  String? fileName;  // Stores name of picked file
+
+  late String categoryName;  // Stores entered catgeory name
 
   // FUNCTION TO PICK IMAGES
   _pickImage() async {
@@ -34,9 +36,21 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     }
   }
 
-  uploadCategory() {
+  // FUNCTION TO UPLOAD IMAGE TO FIREBASE STORAGE
+  _uploadCategoryBannerToStorage(dynamic image) async {
+    Reference ref = _storage.ref().child('categoryImages').child(fileName!);  // Stores result of creating folder to store category images 
+    
+    UploadTask uploadTask = ref.putData(image);  // Stores result of uploading image to Firebase Storage
+  
+    TaskSnapshot snapshot = await uploadTask;  // Stores result of uploaded image
+    String downloadURL = await snapshot.ref.getDownloadURL();  // Stores image download URL
+    return downloadURL;
+  }
+
+  uploadCategory() async {
     if (_formKey.currentState!.validate()) {
-      print('Valid!');
+      // print('Valid!');
+      String imageURL = await _uploadCategoryBannerToStorage(_image);  // Function called if form is valid
     } else {
       print('Not Valid!');
     }
@@ -110,6 +124,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   child: SizedBox(
                     width: 320,
                     child: TextFormField(
+                      onChanged: (value) {
+                        categoryName = value;
+                      },
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Category Name Must Not Be Empty!';
