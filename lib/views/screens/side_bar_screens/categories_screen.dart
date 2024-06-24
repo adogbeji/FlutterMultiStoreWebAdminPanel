@@ -12,22 +12,24 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();  // Form Key
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Form Key
 
-  dynamic _image;  // Global variable to store picked image
+  dynamic _image; // Global variable to store picked image
 
-  String? fileName;  // Stores name of picked file
+  String? fileName; // Stores name of picked file
 
   // FUNCTION TO PICK IMAGES
-  pickImage() async {
+  _pickImage() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: false, type: FileType.image); // Stores picked image
 
     if (result != null) {
       setState(() {
-        _image = result.files.first.bytes;  // Assigns picked image to _image (above)
+        _image =
+            result.files.first.bytes; // Assigns picked image to _image (above)
 
-        fileName = result.files.first.name;  // Assigns name of picked image to fileName (above)
+        fileName = result.files.first
+            .name; // Assigns name of picked image to fileName (above)
       });
     }
   }
@@ -77,15 +79,22 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Center(
-                          child: Text('Category'),
-                        ),
+                        child: _image != null
+                            ? Image.memory(
+                                _image,
+                                fit: BoxFit.cover,
+                              )
+                            : const Center(
+                                child: Text('Category'),
+                              ),
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _pickImage();
+                        },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.yellow.shade900,
@@ -95,7 +104,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     ],
                   ),
                 ),
-        
+
                 // SEARCH BAR
                 Flexible(
                   child: SizedBox(
@@ -115,11 +124,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     ),
                   ),
                 ),
-        
+
                 const SizedBox(
                   width: 30,
                 ),
-        
+
                 ElevatedButton(
                   onPressed: () {
                     uploadCategory();
