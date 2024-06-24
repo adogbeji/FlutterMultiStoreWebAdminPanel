@@ -1,12 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
 
-class CategoriesScreen extends StatelessWidget {
+import 'package:file_picker/file_picker.dart';
+
+class CategoriesScreen extends StatefulWidget {
   // const CategoriesScreen({super.key});
   static const String routeName = '\CategoriesScreen';
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Form Key
+  @override
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
+}
 
+class _CategoriesScreenState extends State<CategoriesScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();  // Form Key
+
+  dynamic _image;  // Global variable to store picked image
+
+  String? fileName;  // Stores name of picked file
+
+  // FUNCTION TO PICK IMAGES
+  pickImage() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: false, type: FileType.image); // Stores picked image
+
+    if (result != null) {
+      setState(() {
+        _image = result.files.first.bytes;  // Assigns picked image to _image (above)
+
+        fileName = result.files.first.name;  // Assigns name of picked image to fileName (above)
+      });
+    }
+  }
 
   uploadCategory() {
     if (_formKey.currentState!.validate()) {
