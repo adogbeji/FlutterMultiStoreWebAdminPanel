@@ -14,16 +14,17 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
-  final FirebaseStorage _storage = FirebaseStorage.instance;  // Stores firebase_storage package
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;  // Stores cloud_firestore package
+  final FirebaseStorage _storage =
+      FirebaseStorage.instance; // Stores firebase_storage package
+  final FirebaseFirestore _firestore =
+      FirebaseFirestore.instance; // Stores cloud_firestore package
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // Form Key
 
-  dynamic _image;  // Global variable to store picked image
+  dynamic _image; // Global variable to store picked image
 
-  String? fileName;  // Stores name of picked file
+  String? fileName; // Stores name of picked file
 
-  late String categoryName;  // Stores entered catgeory name
-
+  late String categoryName; // Stores entered catgeory name
 
   // FUNCTION TO PICK IMAGES
   _pickImage() async {
@@ -43,31 +44,38 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   // FUNCTION TO UPLOAD IMAGE TO FIREBASE STORAGE
   _uploadCategoryBannerToStorage(dynamic image) async {
-    Reference ref = _storage.ref().child('categoryImages').child(fileName!);  // Stores result of creating folder to store category images 
-    
-    UploadTask uploadTask = ref.putData(image);  // Stores result of uploading image to Firebase Storage
-  
-    TaskSnapshot snapshot = await uploadTask;  // Stores result of uploaded image
-    String downloadURL = await snapshot.ref.getDownloadURL();  // Stores image download URL
+    Reference ref = _storage.ref().child('categoryImages').child(
+        fileName!); // Stores result of creating folder to store category images
+
+    UploadTask uploadTask = ref
+        .putData(image); // Stores result of uploading image to Firebase Storage
+
+    TaskSnapshot snapshot = await uploadTask; // Stores result of uploaded image
+    String downloadURL =
+        await snapshot.ref.getDownloadURL(); // Stores image download URL
     return downloadURL;
   }
-  
+
   // FUNCTION TO STORE CATEGORY IMAGES IN FIRESTORE DATABASE
   uploadCategory() async {
-    EasyLoading.show();  // Shows loading spinner
+    EasyLoading.show(); // Shows loading spinner
     if (_formKey.currentState!.validate()) {
-      String imageURL = await _uploadCategoryBannerToStorage(_image);  // Function called if form is valid
+      String imageURL = await _uploadCategoryBannerToStorage(
+          _image); // Function called if form is valid
 
       await _firestore.collection('categories').doc(fileName).set({
         'image': imageURL,
         'categoryName': categoryName,
       }).whenComplete(() {
-        EasyLoading.dismiss();  // Stops loading spinner after image has been uploaded
-        
+        EasyLoading
+            .dismiss(); // Stops loading spinner after image has been uploaded
+
         setState(() {
-          _image = null;  // Removes image from screen after it has been uploaded
+          _image = null; // Removes image from screen after it has been uploaded
+
+          _formKey.currentState!.reset();  // Resets input field
         });
-      }); 
+      });
     } else {
       print('Not Valid!');
     }
@@ -175,6 +183,25 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
               ],
             ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Divider(
+                color: Colors.grey,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                alignment: Alignment.topLeft,
+                child: const Text(
+                  'Categories',
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
