@@ -5,6 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'package:multi_store_web_admin/views/screens/side_bar_screens/widgets/category_widget.dart';
+
 class CategoriesScreen extends StatefulWidget {
   // const CategoriesScreen({super.key});
   static const String routeName = '\CategoriesScreen';
@@ -201,7 +203,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   ),
                 ),
               ),
-            )
+            ),
+
+            const CategoryWidget(),
           ],
         ),
       ),

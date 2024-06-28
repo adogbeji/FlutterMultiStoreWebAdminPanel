@@ -22,6 +22,7 @@ class CategoryWidget extends StatelessWidget {
         }
 
         return GridView.builder(
+          shrinkWrap: true,
           itemCount: snapshot.data!.size,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 6,
