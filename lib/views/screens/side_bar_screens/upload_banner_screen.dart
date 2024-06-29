@@ -5,6 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'package:multi_store_web_admin/views/screens/side_bar_screens/widgets/banner_widget.dart';
+
 class UploadBannerScreen extends StatefulWidget {
   // const UploadBannerScreen({super.key});
   static const String routeName = '\UploadBannerScreen';
@@ -153,6 +155,8 @@ class _UploadBannerScreenState extends State<UploadBannerScreen> {
               child: Text('Banners', style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold,),),
             ),
           ),
+
+          const BannerWidget(),
         ],
       ),
     );
