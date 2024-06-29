@@ -140,6 +140,19 @@ class _UploadBannerScreenState extends State<UploadBannerScreen> {
               ),
             ],
           ),
+
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Divider(color: Colors.grey,),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              alignment: Alignment.topLeft,
+              child: Text('Banners', style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold,),),
+            ),
+          ),
         ],
       ),
     );
