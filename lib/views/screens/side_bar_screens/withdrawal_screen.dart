@@ -47,7 +47,7 @@ class WithdrawalScreen extends StatelessWidget {
               _rowHeader('BANK ACCOUNT', 2),
               _rowHeader('EMAIL', 1),
               _rowHeader('PHONE', 1),
-            ]
+            ],
           ),
         ],
       ),
